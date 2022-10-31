@@ -26,7 +26,7 @@ type Todo struct {
 type GetAllParam struct {
 	limit int
 	page int
-	thing string
+	// thing string
 }
  
 func (d *DBManager) Create(t *Todo) (*Todo, error) {
