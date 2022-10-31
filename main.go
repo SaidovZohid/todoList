@@ -56,4 +56,29 @@ func main(){
 	// } else {
 	// 	fmt.Println("Succesfully deleted...")
 	// }
+	todos, err := dbManager.GetAll(&GetAllParam{
+		limit: 20,
+		page: 3,
+	})
+	if err != nil {
+		log.Fatalf("Failed to Get All info: %v", err)
+	}
+	PrintTodos(todos)
+}
+
+func PrintTodos(todos []*Todo) {
+	for _, todo := range todos {
+		PrintTodo(todo)
+	}
+} 
+
+func PrintTodo(todo *Todo) {
+	fmt.Println("----------- Todos -------------")
+	fmt.Printf("Id: %v\n", todo.id)
+	fmt.Printf("Title: %v\n", todo.title)
+	fmt.Printf("Description: %v\n", todo.description)
+	fmt.Printf("Assignee: %v\n", todo.assignee)
+	fmt.Printf("Status: %v\n", todo.status)
+	fmt.Printf("Deadline %v\n", todo.deadline)
+	fmt.Printf("Created At: %v\n", todo.created_at)
 }

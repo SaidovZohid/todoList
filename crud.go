@@ -153,7 +153,7 @@ func (d *DBManager) GetAll(g *GetAllParam) ([]*Todo, error) {
 			status,
 			deadline,
 			created_at
-		FROM todo ORDER BY id ASC LIMIT $1 OFFSET $2, 
+		FROM todo ORDER BY id ASC LIMIT $1 OFFSET $2 
 	`
 	rows, err := d.db.Query(
 		query,
