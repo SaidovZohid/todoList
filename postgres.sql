@@ -1,0 +1,12 @@
+CREATE DATABASE TodoList
+DROP DATABASE Todo
+
+CREATE TABLE todo (
+    id SERIAL NOT NULL,
+    title VARCHAR NOT NULL,
+    description TEXT NOT NULL,
+    assignee VARCHAR(50) NOT NULL,
+    status BOOLEAN NOT NULL,
+    deadline DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
