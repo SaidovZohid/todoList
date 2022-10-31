@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 )
 
@@ -26,7 +27,10 @@ type Todo struct {
 type GetAllParam struct {
 	limit int
 	page int
-	// thing string
+	title string
+	description string
+	status bool
+	deadline time.Time
 }
  
 func (d *DBManager) Create(t *Todo) (*Todo, error) {
@@ -144,6 +148,14 @@ func (d *DBManager) Delete(id int) error {
 
 func (d *DBManager) GetAll(g *GetAllParam) ([]*Todo, error) {
 	offset := (g.page - 1) * g.limit
+	limit := fmt.Sprintf(" LIMIT %d OFFSET %d ", g.limit, offset)
+	filter := " WHERE true "
+	if g.title != "" {
+		filter += " AND title ILIKE '%" + g.title + "%' "
+	}
+	if g.description != "" {
+		filter += " AND description ILIKE '%" + g.description + "%' "
+	}
 	query := `
 		SELECT 
 			id, 
@@ -153,13 +165,8 @@ func (d *DBManager) GetAll(g *GetAllParam) ([]*Todo, error) {
 			status,
 			deadline,
 			created_at
-		FROM todo ORDER BY id ASC LIMIT $1 OFFSET $2 
-	`
-	rows, err := d.db.Query(
-		query,
-		g.limit,
-		offset,
-	)
+		FROM todo` + filter + "ORDER BY id " + limit
+	rows, err := d.db.Query(query)
 	if err != nil  {
 		return nil, err
 	}

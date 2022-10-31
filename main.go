@@ -58,7 +58,8 @@ func main(){
 	// }
 	todos, err := dbManager.GetAll(&GetAllParam{
 		limit: 20,
-		page: 3,
+		page: 1,
+		title: "Ghost",
 	})
 	if err != nil {
 		log.Fatalf("Failed to Get All info: %v", err)
