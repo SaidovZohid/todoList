@@ -29,8 +29,8 @@ type GetAllParam struct {
 	page int
 	title string
 	description string
-	status bool
-	deadline time.Time
+	// status bool
+	// deadline time.Time
 }
  
 func (d *DBManager) Create(t *Todo) (*Todo, error) {
